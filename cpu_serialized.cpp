@@ -49,28 +49,15 @@ int main(int argc, char* argv[])
         board[conv(n + 1, n + 1, n)] = board[conv(1, 1, n)];
 
         for (int i = 1; i <= n; i++)
-        {
             for (int j = 1; j <= n; j++)
             {
-                uint8_t alive_num = 0;
+                int alive_num = 0;
                 for (int xdir = -1; xdir <= 1; xdir++)
-                {
                     for (int ydir = -1; ydir <= 1; ydir++)
-                    {
                         if (xdir != 0 || ydir != 0)
                             alive_num += board[conv(i + xdir, j + ydir, n)];
-                    }
-                }
-                if (board[conv(i, j, n)] == 0)
-                {
-                    board_new[conv(i, j, n)] = alive_num == 3 ? 1 : 0;
-                }
-                else
-                {
-                    board_new[conv(i, j, n)] = (alive_num == 2 || alive_num == 3) ? 1 : 0;
-                }
+                board_new[conv(i, j, n)] = (alive_num == 3 || (alive_num == 2 && board[conv(i, j, n)])) ? 1 : 0;
             }
-        }
         swap(board, board_new);
     }
     cout << "Time:" << t.toc() << "s" << endl;

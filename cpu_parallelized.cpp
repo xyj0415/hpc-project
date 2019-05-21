@@ -4,14 +4,15 @@
 #include <string.h>
 #include <iostream>
 
+#define conv(i, j, n) ((i) * ((n) + 2) + (j))
 using namespace std;
 
 enum DirectionTag {Left = 8888, Right, Top, Bottom, TopLeft, TopRight, BottomLeft, BottomRight};
 
-inline int conv(int i, int j, int n)
-{
-    return i * (n + 2) + j;
-}
+// inline int conv(int i, int j, int n)
+// {
+//     return i * (n + 2) + j;
+// }
 
 inline int conv2(int rank, int xdir, int ydir, int n)
 {
@@ -124,14 +125,14 @@ int main(int argc, char* argv[])
     if (mpirank == 0)
     {
         cout << "Time:" << MPI_Wtime() - tt << "s" << endl;
-        for (int i = 1; i <= ln; i++)
-        {
-            for (int j = 1; j <= ln; j++)
-            {
-                cout << (char)(board_new[conv(i, j, ln)] + '0');
-            }
-            cout << endl;
-        }
+        // for (int i = 1; i <= ln; i++)
+        // {
+        //     for (int j = 1; j <= ln; j++)
+        //     {
+        //         cout << (char)(board_new[conv(i, j, ln)] + '0');
+        //     }
+        //     cout << endl;
+        // }
     }
     MPI_Finalize();
     free(board);

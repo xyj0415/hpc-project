@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
     int n, max_iters, p, mpirank; 
     if(argc !=3){
-        fprintf(stderr, "usage: ./cpu_serialized [dimension] [iterations]\n", );
+        fprintf(stderr, "usage: ./cpu_serialized [dimension] [iterations]\n");
         exit(EXIT_FAILURE);
     }
 

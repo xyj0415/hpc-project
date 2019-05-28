@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 {
     int n, max_iters, p, mpirank; 
     if(argc !=3){
-        fprintf(stderr, "usage: ./cpu_parallelized [dimension] [iterations]\n", );
+        fprintf(stderr, "usage: ./cpu_parallelized [dimension] [iterations]\n");
         exit(EXIT_FAILURE);
     }
     MPI_Status status;

@@ -80,7 +80,7 @@ int main(int argc, char const *argv[]){
 	int iteration;
 	int block_size;
 	if(argc !=4){
-        fprintf(stderr, "usage: ./gpu [dimension] [iterations] [block size]\n", );
+        fprintf(stderr, "usage: ./gpu [dimension] [iterations] [block size]\n");
         exit(EXIT_FAILURE);
     }
 	sscanf(argv[1], "%d", &width);

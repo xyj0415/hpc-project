@@ -45,16 +45,16 @@ __global__ void game_kernel(ubyte* current, ubyte* next, uint width, uint height
 	next[index] = !((alive_cell | current[index]) ^ 3);
 }	
 
-void run_game(ubyte* world, ubyte* current, ubyte* next, uint width, uint height, int iteration){
+void run_game(ubyte* world, ubyte* current, ubyte* next, uint width, uint height, int iteration, int block_size){
 	// dim3 block_dim(32, 32);
 	// dim3 grid_dim(width/BLOCK_SIZE, height/BLOCK_SIZE);
 	uint board_size = width * height;
-	uint thread_num = 512;
-	uint block_num = board_size / thread_num;
+	//uint thread_num = 512;
+	uint block_num = board_size / block_size;
 	for(int i=0; i< iteration; i++){
 		//printf("%d\n", i);
 		// game_kernel<<<grid_dim, block_dim>>>(current, next, width, height);
-		game_kernel<<<block_num, thread_num>>>(current, next, width, height, board_size);
+		game_kernel<<<block_num, block_size>>>(current, next, width, height, board_size);
 		std::swap(current, next);
 
 		// printf("itr: %d\n", i);
@@ -68,9 +68,18 @@ void run_game(ubyte* world, ubyte* current, ubyte* next, uint width, uint height
 
 int main(int argc, char const *argv[]){
 	/* code */
-	uint width = 1024;
-	uint height = 1024;
-	int iteration = 100000;
+	uint width;
+	uint height;
+	int iteration;
+	int block_size;
+	if(argc !=4){
+        fprintf(stderr, "usage: ./gpu2 [dimension] [iterations] [block size]\n", );
+        exit(EXIT_FAILURE);
+    }
+	sscanf(argv[1], "%d", &width);
+	sscanf(argv[1], "%d", &height);
+    sscanf(argv[2], "%d", &iteration);
+    sscanf(argv[3], "%d", &block_size);
 	srand(time(NULL));
 
 	ubyte *world;
@@ -86,7 +95,7 @@ int main(int argc, char const *argv[]){
 	cudaDeviceSynchronize();
 
 	double tt = omp_get_wtime();
-	run_game(world, g_world_current, g_world_next, width, height, iteration);
+	run_game(world, g_world_current, g_world_next, width, height, iteration, block_size);
 	printf("time: %lf\n", (omp_get_wtime()-tt));
 	cudaFree(g_world_current);
 	cudaFree(g_world_next);

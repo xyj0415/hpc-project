@@ -1,0 +1,23 @@
+Parallelized Game of Life Simulation
+Yijian Xie, Wenjun Qu
+Project for NYU-HPC19
+
+cpu_serialized.cpp
+	- Serialized version of GOL
+cpu_parallelized.cpp
+	- MPI version of GOL
+cpu_parallelized2.cpp
+	- MPI version of GOL, with data compression 
+gpu.cu
+	- CUDA version of GOL, uses 2d grid and 2d block
+gpu2.cu
+	- CUDA version of GOL, uses 1d grid and 1d block, with bitwise optimization
+
+Use "make" to compile all the source files.
+	*Please make sure you have OpenMPI and Cuda loaded
+To run the serialized version:
+	./cpu_serialized [dimension] [iterations]
+To run the MPI version:
+	mpirun -np [num of nodes] ./cpu_parallelized [dimension] [iterations]
+To run the cuda version:
+	./gpu [dimension] [iterations] [block size]

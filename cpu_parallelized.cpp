@@ -25,6 +25,10 @@ inline int conv2(int rank, int xdir, int ydir, int n)
 int main(int argc, char* argv[])
 {
     int n, max_iters, p, mpirank; 
+    if(argc !=3){
+        fprintf(stderr, "usage: ./cpu_parallelized [dimension] [iterations]\n", );
+        exit(EXIT_FAILURE);
+    }
     MPI_Status status;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &mpirank);
@@ -32,6 +36,7 @@ int main(int argc, char* argv[])
 
     sscanf(argv[1], "%d", &n);
     sscanf(argv[2], "%d", &max_iters);
+
 
     int sqrt_p = (int) (sqrt(p) + 0.001);
     if (n % sqrt_p != 0 && mpirank == 0)

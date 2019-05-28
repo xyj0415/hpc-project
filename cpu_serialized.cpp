@@ -15,6 +15,10 @@ inline int conv(int i, int j, int n)
 int main(int argc, char* argv[])
 {
     int n, max_iters, p, mpirank; 
+    if(argc !=3){
+        fprintf(stderr, "usage: ./cpu_serialized [dimension] [iterations]\n", );
+        exit(EXIT_FAILURE);
+    }
 
     sscanf(argv[1], "%d", &n);
     sscanf(argv[2], "%d", &max_iters);
